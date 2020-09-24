@@ -1,9 +1,30 @@
- build:
-   image: $CI_REGISTRY/rmhogervorst/dockerized_script/docker:19.03.12
-   services:
-     - name: $CI_REGISTRY/rmhogervorst/dockerized_script/docker:19.03.12-dind
-       alias: docker
-   stage: build
-   script:
-     - docker build -t dockerize_script .
-     - docker run dockerize_script
+image: docker:19.03.12
+services:
+  - docker:19.03.12-dind
+
+stages:
+  - build
+  - test
+
+# make use of gitlab variables, that will auto supply the correct names
+# this is a modification of the gitlab example here: https://gitlab.com/help/user/packages/container_registry/index
+
+variables:
+  - DOCKER_HOST: tcp://docker:2376
+  - DOCKER_TLS_CERTDIR: "/certs"
+  - CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build:
+  stage: build
+  script:
+    - docker build --pull -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+
+test:
+  stage: test
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker run $CONTAINER_TEST_IMAGE
