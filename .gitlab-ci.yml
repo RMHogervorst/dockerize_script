@@ -1,0 +1,9 @@
+ build:
+   image: $CI_REGISTRY/rmhogervorst/dockerized_script/docker:19.03.12
+   services:
+     - name: $CI_REGISTRY/rmhogervorst/dockerized_script/docker:19.03.12-dind
+       alias: docker
+   stage: build
+   script:
+     - docker build -t dockerize_script .
+     - docker run dockerize_script
