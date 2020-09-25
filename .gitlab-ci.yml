@@ -28,4 +28,4 @@ test:
   stage: test
   script:
     - docker pull $CONTAINER_TEST_IMAGE
-    - docker run -e apikey=$apikey -e apisecretkey=$apisecretkey -e access_token=$access_token -e access_token_secret=$access_token_secret $CONTAINER_TEST_IMAGE
+    - docker run -e apikey=$apikey -e apisecretkey=$apisecretkey -e access_token=$access_token -e access_token_secret=$access_token_secret -e LOCATION=gitlabdockercontainer $CONTAINER_TEST_IMAGE

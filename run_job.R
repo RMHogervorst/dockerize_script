@@ -104,7 +104,10 @@ p <-
 ggsave(tmp, plot = p,width = 9, height = 6,)
 
 
-post_tweet(status = paste0(title," #invertedushape"),
+post_tweet(status = paste0(title," #invertedushape",
+                           " This post came from: ",
+                           Sys.getenv("LOCATION")
+                           ),
            media = tmp,
            token = token)
 message("Post successful")
