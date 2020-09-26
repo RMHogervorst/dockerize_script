@@ -4,6 +4,9 @@
 This is the same application as 'invertedushape' a but I'm trying out a different step now. I'm packing up the script and dependencies into a docker
 container and build and run that container on the different hosts.
 
+There is also a version for heroku and directly on github and gitlab 
+here: <https://github.com/rmhogervorst/invertedushape/>
+
 
 # General checks
 **Does the script work?**
